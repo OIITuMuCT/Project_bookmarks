@@ -99,6 +99,16 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+# бэкенд аутентификации
+# с применением электронной почты EmailAuthBackend.
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'account.authentication.EmailAuthBackend',
+]
+
+
 # login 
 
 LOGIN_REDIRECT_URL ='dashboard'
@@ -106,6 +116,13 @@ LOGIN_REDIRECT_URL ='dashboard'
 LOGIN_URL = 'login'
 
 LOGOUT_URL = 'logout'
+
+# медиафайлы 
+
+MEDIA_URL = 'media/'
+
+MEDIA_ROOT = BASE_DIR / 'media'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -138,3 +155,4 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # EMAIL_PORT = 587
 # EMAIL_USE_TLS = True
 # # EMAIL_USE_SSL = False
+
