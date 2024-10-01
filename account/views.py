@@ -27,7 +27,7 @@ def user_login(request):
     else:
         form =LoginForm()
     return render(request, 'account/login.html', {'form': form})
-                
+
 
 @login_required
 def dashboard(request):
@@ -66,7 +66,7 @@ def edit(request):
         profile_form = ProfileEditForm( 
                                     instance=request.user.profile,
                                     data=request.POST,
-                                    files=request.POST)
+                                    files=request.FILES)
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()

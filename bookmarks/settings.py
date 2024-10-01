@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-(ay99s746j^$$@t1e%=lhdv%epn&)101e!p9$^-@io%)p_noo7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.50.44','mysite.com', 'localhost', '127.0.0.1', '0.0.0.0']
 
 
 # Application definition
@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_django',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -100,13 +102,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# бэкенд аутентификации
-# с применением электронной почты EmailAuthBackend.
 
-AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
-    'account.authentication.EmailAuthBackend',
-]
+
+
+
+
+
 
 
 # login 
@@ -155,4 +156,46 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # EMAIL_PORT = 587
 # EMAIL_USE_TLS = True
 # # EMAIL_USE_SSL = False
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
+# бэкенд аутентификации
+# с применением электронной почты EmailAuthBackend.
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'account.authentication.EmailAuthBackend',
+    # 'social_core.backends.facebook.FacebookOAuth2',
+    # 'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.google.GoogleOAuth2',
+    # 'social_core.backends.vk.VKOAuth2'
+    'social_core.backends.github.GithubOAuth2',
+    # 'social_auth.backends.contrib.vk.VKOAuth2Backend',
+    
+]
+
+# VK OAuth2 Authentication
+# ID 51794498
+# 4VUb9sd1zug8xlS8OAFX
+# SOCIAL_AUTH_VK_OAUTH2_KEY = '51794498'
+# SOCIAL_AUTH_VK_OAUTH2_SECRET = '4VUb9sd1zug8xlS8OAFX'
+
+SOCIAL_AUTH_GITHUB_KEY = '906389a7a67aa7322f00'
+SOCIAL_AUTH_GITHUB_SECRET = '94b478ec06780c6f9e0ef1eb017f9983c2052c7b'
+# SOCIAL_AUTH_VK_OAUTH2_SCOPE = []
+
+# cdf11d5ecdf11d5ecdf11d5e34cee74f1cccdf1cdf11d5ea8a7358e683babe1f0356e23
+# YANDEX_OAUTH2_CLIENT_KEY = '02fed97239ec40da8777592e235a1fb3'
+# YANDEX_OAUTH2_CLIENT_SECRET = '3af72526878645bbbea6ff7fd1983cb2'
+
+SOCIAL_AUTH_PIPELINE = [
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.get_username',
+    'social_core.pipeline.user.create_user',
+    'account.authentication.create_profile',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
+]

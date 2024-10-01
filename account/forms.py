@@ -9,14 +9,15 @@ from .models import Profile
 
 class LoginForm(forms.Form):
     username = forms.CharField()
-    password = forms.CharField(widget=forms.PasswordInput())
+    password = forms.CharField(widget=forms.PasswordInput)
+
 
 class UserRegistrationForm(forms.ModelForm):
     password = forms.CharField(label='Password',
+                               widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Repeat password',
                                 widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Repair password',
-                                widget=forms.PasswordInput)
-    
+
     class Meta:
         model = User
         fields = ['username', 'first_name', 'email']
@@ -38,13 +39,13 @@ class UserEditForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'email']
-        
+
     def clean_email(self):
         data = self.cleaned_data['email']
         qs = User.objects.exclude(id=self.instance.id)\
-            .filter(email=data)
+                         .filter(email=data)
         if qs.exists():
-            raise forms.ValidationError(' Email already in use.')
+            raise forms.ValidationError('Email already in use.')
         return data
 
 
